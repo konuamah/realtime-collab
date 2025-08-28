@@ -6,11 +6,11 @@ A lightweight full-stack application built with **Go** and **React** that enable
 
 ## Features
 
-- ✅ Real-time collaboration across multiple users  
-- ✅ Conflict-free state management using CRDT  
-- ✅ WebSocket-based low-latency updates  
-- ✅ Offline mode: edits are queued locally and synced automatically when connection is restored  
-- ✅ Minimal React frontend for live editing  
+- Real-time collaboration across multiple users  
+- Conflict-free state management using CRDT  
+- WebSocket-based low-latency updates  
+- Offline mode: edits are queued locally and synced automatically when connection is restored  
+- Minimal React frontend for live editing  
 
 ---
 
@@ -27,5 +27,5 @@ A lightweight full-stack application built with **Go** and **React** that enable
 
 ### 1. Clone the repository
 ```bash
-git clone https://github.com/yourusername/realtime-collab.git
+git clone https://github.com/konuamah/realtime-collab.git
 cd realtime-collab
