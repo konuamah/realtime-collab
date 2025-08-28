@@ -11,7 +11,7 @@ import (
 
 var upgrader = websocket.Upgrader{
 	CheckOrigin: func(r *http.Request) bool {
-		return true // Allow all origins (dev only)
+		return true // Dev only
 	},
 }
 
@@ -27,11 +27,14 @@ func handleConnections(w http.ResponseWriter, r *http.Request) {
 	}
 	defer ws.Close()
 
-	// Add client
 	clients[ws] = true
 
-	// Send current document
-	ws.WriteMessage(websocket.TextMessage, []byte(doc.GetText()))
+	// Send current document as JSON
+	initialData, _ := json.Marshal(map[string]string{
+		"type": "update",
+		"text": doc.GetText(),
+	})
+	ws.WriteMessage(websocket.TextMessage, initialData)
 
 	for {
 		_, msg, err := ws.ReadMessage()
@@ -41,25 +44,26 @@ func handleConnections(w http.ResponseWriter, r *http.Request) {
 			break
 		}
 
-		// Apply operation
 		var op Operation
-		err = json.Unmarshal(msg, &op)
-		if err != nil {
+		if err := json.Unmarshal(msg, &op); err != nil {
 			fmt.Println("Invalid operation:", err)
 			continue
 		}
-		doc.ApplyOp(op)
 
-		// Send updated document to all clients
-		broadcast <- doc.GetText()
+		doc.ApplyOp(op)
+		broadcast <- doc.GetText() // trigger broadcast
 	}
 }
 
 func handleBroadcast() {
 	for {
-		msg := <-broadcast
+		text := <-broadcast
+		data, _ := json.Marshal(map[string]string{
+			"type": "update",
+			"text": text,
+		})
 		for client := range clients {
-			err := client.WriteMessage(websocket.TextMessage, []byte(msg))
+			err := client.WriteMessage(websocket.TextMessage, data)
 			if err != nil {
 				client.Close()
 				delete(clients, client)
