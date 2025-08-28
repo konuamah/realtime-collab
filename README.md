@@ -1,4 +1,4 @@
-# Real-Time Collaboration Engine (Google Docs Lite)
+  # Real-Time Collaboration Engine (Google Docs Lite)
 
 A lightweight full-stack application built with **Go** and **React** that enables collaborative document editing in real time, inspired by Google Docs. Multiple users can edit the same document simultaneously, with changes merged safely using **CRDTs**.
 
@@ -6,11 +6,11 @@ A lightweight full-stack application built with **Go** and **React** that enable
 
 ## Features
 
-- ✅ Real-time collaboration across multiple users  
-- ✅ Conflict-free state management using CRDT  
-- ✅ WebSocket-based low-latency updates  
-- ✅ Offline mode: edits are queued locally and synced automatically when connection is restored  
-- ✅ Minimal React frontend for live editing  
+- Real-time collaboration across multiple users  
+- Conflict-free state management using CRDT  
+- WebSocket-based low-latency updates  
+- Offline mode: edits are queued locally and synced automatically when connection is restored  
+- Minimal React frontend for live editing  
 
 ---
 
